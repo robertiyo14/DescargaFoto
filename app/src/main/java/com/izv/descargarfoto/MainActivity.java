@@ -3,6 +3,7 @@ package com.izv.descargarfoto;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -64,12 +66,13 @@ public class MainActivity extends Activity {
     }
 
     public void guardar(View v) {
-        HiloFacil hf = new HiloFacil();
-        hf.execute();
-        /*Bitmap img = null;
-        Bitmap image = null;
-        img = BitmapFactory.decodeFile();
-        iv.setImageBitmap(img);*/
+        if(etRuta.getText().toString().compareTo("")!=0){
+            HiloFacil hf = new HiloFacil();
+            hf.execute();
+            iv.setImageURI(Uri.parse(ruta));
+        }else{
+            Toast.makeText(this,"Por favor, introduzca la ruta de una imagen",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -92,7 +95,13 @@ public class MainActivity extends Activity {
             try {
                 String dir = etRuta.getText().toString();
                 URL url = new URL(dir);
-                nombre = etNombre.getText().toString();
+                if(etNombre.getText().toString().compareTo("")==0){
+                    String[] ruta = dir.split("/");
+                    nombre = ruta[ruta.length-1];
+                    nombre = nombre.substring(0,nombre.length()-4);
+                }else{
+                    nombre = etNombre.getText().toString();
+                }
                 // establecemos conexion
                 URLConnection urlCon = url.openConnection();
                 String tipo = dir.substring(dir.length()-3);
@@ -125,7 +134,7 @@ public class MainActivity extends Activity {
                     Log.v("Error: ","No se puede descargar ese tipo de archivos.");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.v("LOG: ",e.toString());
             }
             return null;
         }
