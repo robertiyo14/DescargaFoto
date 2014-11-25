@@ -36,8 +36,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         etRuta = (EditText) findViewById(R.id.etRuta);
         etNombre = (EditText) findViewById(R.id.etNombre);
-        rbPublica = (RadioButton) findViewById(R.id.rbPrivada);
-        rbPrivada = (RadioButton) findViewById(R.id.rbPublica);
+        rbPublica = (RadioButton) findViewById(R.id.rbPublica);
+        rbPrivada = (RadioButton) findViewById(R.id.rbPrivada);
     }
 
 
@@ -104,7 +104,8 @@ public class MainActivity extends Activity {
                         ruta = getExternalFilesDir(Environment.DIRECTORY_DCIM).getPath() +"/"+ nombre+"."+tipo;
                         Log.v("Ruta: ",ruta);
                     } else {
-                        ruta = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() +"/"+ nombre+"."+tipo;
+                        ruta = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath()
+                                +"/"+ nombre+"."+tipo;
                         Log.v("Ruta: ",ruta);
                     }
                     FileOutputStream fos = new FileOutputStream(ruta);
