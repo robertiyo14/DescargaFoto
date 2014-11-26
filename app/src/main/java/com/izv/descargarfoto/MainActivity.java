@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
         etNombre = (EditText) findViewById(R.id.etNombre);
         rbPublica = (RadioButton) findViewById(R.id.rbPublica);
         rbPrivada = (RadioButton) findViewById(R.id.rbPrivada);
+        iv = (ImageView)findViewById(R.id.ivImagen);
     }
 
 
@@ -69,7 +70,6 @@ public class MainActivity extends Activity {
         if(etRuta.getText().toString().compareTo("")!=0){
             HiloFacil hf = new HiloFacil();
             hf.execute();
-            iv.setImageURI(Uri.parse(ruta));
         }else{
             Toast.makeText(this,"Por favor, introduzca la ruta de una imagen",Toast.LENGTH_SHORT).show();
         }
@@ -148,6 +148,11 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String s) {
             //4º en ejecutarse al finalizar la hebra. En la hebra UI.
+            File imgFile = new  File(ruta);
+            if(imgFile.exists())
+            {
+                iv.setImageURI(Uri.fromFile(imgFile));
+            }
             super.onPostExecute(s);
         }
 
